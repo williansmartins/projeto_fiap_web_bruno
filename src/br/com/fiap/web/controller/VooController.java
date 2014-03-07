@@ -127,20 +127,21 @@ public class VooController {
 		return "resultado_busca_voos_simples.xhtml";
 	}
 
-	public void reservar() {
-		System.out.println("Reservando o vôo: " + entity.getId());
-		Passageiro passageiro = new Passageiro();
-		passageiro.setNome("BRUNO");
-		passageiro.setIdade(28);
-		passageiro.setCpf("1234568");
-		daoPassageiro.insert(passageiro);
-		
-		this.trecho = daoTrecho.findById(this.trecho.getId());
-		Reserva reserva = new Reserva(Math.random() + "_LOC", Collections.singletonList(passageiro),
-				this.trecho);
-		
-		daoReserva.insert(reserva);
-		new Redirecionador().redirecionar("reserva_sucesso.xhtml");
+	public void reservar(int id) {
+	    	System.out.println( "Assento" + id);
+//		System.out.println("Reservando o vôo: " + entity.getId());
+//		Passageiro passageiro = new Passageiro();
+//		passageiro.setNome("BRUNO");
+//		passageiro.setIdade(28);
+//		passageiro.setCpf("1234568");
+//		daoPassageiro.insert(passageiro);
+//		
+//		this.trecho = daoTrecho.findById(this.trecho.getId());
+//		Reserva reserva = new Reserva(Math.random() + "_LOC", Collections.singletonList(passageiro),
+//				this.trecho);
+//		
+//		daoReserva.insert(reserva);
+//		new Redirecionador().redirecionar("reserva_sucesso.xhtml");
 	}
 
 	// GETTERS AND SETTERS

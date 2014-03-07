@@ -22,7 +22,9 @@
 						    <c:forEach var="assento" items="#{voo_controller.listaDeAssentosFake}">
 							    <div class="labels">
 							        <label for="code" class="floatLeft">Assento #{assento.numero}:
-									    <h:commandButton class="btn btn-success btn-reservar #{assento.reservado == true ? 'disabled' : 'abled'}" value="#{assento.classe}" />
+									    <h:commandButton action="#{voo_controller.reservar(assento.id)}" class="btn btn-success btn-reservar #{assento.reservado == true ? 'disabled' : 'abled'}" value="#{assento.classe}" >
+									    </h:commandButton>
+									    
 									    <span>( R$ #{assento.voo.preco * ( assento.classe=='executiva' ? 1.2 : 1 )} )</span>
 							        </label>
 							    </div> 
