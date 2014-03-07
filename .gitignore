@@ -8,6 +8,5 @@
 *.war
 *.ear
  
-
 # Folders #
 target/
