@@ -1,0 +1,39 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+  
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+	<h:head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	    <ui:insert name="titulo"></ui:insert>
+	    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
+	    <link href="css/estilos.css" rel="stylesheet" type="text/css" />
+	    <link href="css/jquery-ui.css" rel="stylesheet" type="text/css" />
+	    <link rel="shortcut icon" href="img/airplane.png" type="image/x-icon" />
+	</h:head>
+	<body> 
+		<div class="wrapper" >                  
+	        <div id="vitrine">
+	        	<a href="#{request.getContextPath()}">
+	        	<div class="logo_clicavel">
+	        	</div>
+	        	</a> 
+	        </div>
+		    <div id="palco">
+		    	<ui:insert name="palco"></ui:insert>
+		  	</div>
+		    <h:messages styleClass="alert alert-danger">
+		    	<h:message for="field_id"></h:message>
+		    </h:messages>
+	  	</div>
+       	<div id="footer">
+	    	<ui:insert name="rodape"></ui:insert>
+      	</div>
+    	<script src="js/jquery-2.0.0.min.js"></script>
+    	<script src="js/bootstrap.min.js"></script>
+    	<script src="js/scripts.js"></script>
+    	<script src="js/jquery-ui.js"></script>
+	</body>
+</html>

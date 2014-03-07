@@ -1,0 +1,187 @@
+@charset "utf-8";
+
+*{ margin:0; padding:0; outline:none; text-decoration:none}
+* img{border:none}
+
+/*-----------------------------------------------------------------------*/
+body{
+	/*background-color: #A6BCA5;/**/
+	background-image:url(../img/index/noise.png);/**/
+	background-repeat:repeat;	/**/
+	background-color: rgb(238, 238, 238);
+}
+/*-----------------------------------------------------------------------*/
+.wrapper{
+	width:950px;
+	margin:auto;
+	overflow:hidden;
+	outline: solid 1px rgb(197, 197, 197);
+	margin-top:10px;
+	/*background-color:#f3f2ed;/**/
+}
+/*-----------------------------------------------------------------------*/
+
+#vitrine{
+	background-color:currentcolor; 
+	width:950px;
+	height:142px;
+	background-image:url(../img/vitrine.jpg);/**/
+}
+
+/*-----------------------------------------------------------------------*/
+
+#palco{
+	background-color:#FFFFFF;/**/
+	width:950px;
+	height:385px;
+	overflow: hidden;	
+	background-image:url(../img/bg-footer.png);/**/
+	background-repeat: repeat-x;
+	background-position: 136px 302px;
+}
+/*-----------------------------------------------------------------------*/
+.floatLeft{
+	float: left;
+}
+/*-----------------------------------------------------------------------*/
+.identificador{
+	position: absolute;
+	right: 3px;
+	top: 130px;
+	font-style: italic;
+	color: gray;
+	font-weight: normal;
+}
+.identificador span{
+	color: rgb(92, 184, 92);
+	font-weight: bold;
+}
+/*-----------------------------------------------------------------------*/
+.menu{
+	padding-top: 72px;
+	padding-right: 155px;
+	float: right;
+	position: relative;
+}
+.menu ul{
+	height: 50px;
+}
+.menu li{
+	width: 85px;
+	height: 50px;
+/* 	outline: solid 1px green; */
+	float: left;
+	padding: 0px;
+	margin: 0px;	
+	list-style: none;
+	text-align: center;
+	padding-top: 14px;
+}
+.menu li a:hover{
+/* 	color: rgb(255, 124, 16); */
+/* 	text-decoration: none; */
+}
+
+.menu li a{
+	font-weight: 700;
+	color: rgb(143, 143, 143);
+	font-size: 11px;
+}
+.menu li a.active{
+	font-weight: bold;
+	color: rgb(255, 124, 16);
+	text-decoration: none;
+	font-size: 12px;
+	cursor: pointer;
+}
+.menu li .img{
+	height: 20px;
+	width: 20px;
+/* 	outline: solid 1px black; */
+	display: block;
+	margin-left: 33px;
+	background-image:url(../img/sprite-menu-superior.png);
+	cursor: pointer;
+}
+.menu .clientes .img{	background-position: -20px -100px;}
+.menu .clientes .img.active{	background-position: -0px -100px;}
+.menu .trechos .img{	background-position: -20px -20px;}
+.menu .trechos .img.active{	background-position: -1px -20px;}
+.menu .voos .img{	background-position: -20px -0px;}
+.menu .voos .img.active{	background-position: -0px -0px;}
+.menu .reservas .img{	background-position: -20px 0px;}
+.menu .reservas .img.active{	background-position: -0px 0px;}
+.menu .assentos .img{	background-position: -20px -156px;}
+.menu .assentos .img.active{	background-position: 1px -155px;}
+.menu .logout .img{	background-position: -24px -118px;}
+.menu .logout .img.active{	background-position: -3px -118px;}
+
+/*-----------------------------------------------------------------------*/
+.form1{
+	margin: 0 auto;
+	width: 300px;
+}
+.conteudo{
+	width: 700px;
+	margin: 0 auto;
+}
+h1.centro{
+	text-align: center;
+}
+.centro{
+	text-align: center;
+}
+.tabela{
+	width: 700px;
+	height: 250px!important;
+	overflow: auto;
+}
+#tabela_wrapper{
+	outline: 1px rgb(255, 0, 0);
+	height: 256px;
+	width: 723px;
+	overflow: auto;
+	margin-bottom: 10px;
+}
+
+
+/*-----------------------------------------------------------------------*/
+.logo_clicavel:hover {
+	cursor: pointer;
+}
+.logo_clicavel{
+	width: 317px;
+	height: 92px;
+	position: absolute;
+}
+.labels{
+	height: 60px;
+}
+
+.alert-danger {
+	position: absolute;
+	top: 0;
+	left: 0;
+}
+
+/*-----------------------------------------------------------------------*/
+.assento .labels{
+	height: 39px;
+}
+.assento label{
+	line-height: 32px;
+	margin-right: 7px;
+}
+.assento.conteudo{
+	width: 460px;
+}
+.assento .combos{
+	width: 40%;
+	margin-right: 5px;
+}
+
+.entrar-novamente{
+	width: 240px;
+	display: block;
+	margin: 0 auto;
+}

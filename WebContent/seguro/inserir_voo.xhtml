@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="../templates/template.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Linhas Aéreas - Início</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<div class="conteudo">
+					<h1 class="centro">Inserir Vôo</h1>
+					<h:form >
+						<div class="tabela"> 
+						    <div class="labels">
+						        <label for="code">Data:</label>
+						        <h:inputText type="text" class="form-control data" value="#{voo_controller.entity.data}">
+						        	<f:convertDateTime pattern="dd/MM/yyyy"/>
+						        </h:inputText>
+						    </div>
+						    <div class="labels">
+						        <label for="code">Hora:</label>
+						        <h:inputText type="text" class="form-control hora" value="#{voo_controller.entity.hora}">
+						        </h:inputText>
+						    </div>
+						    <div class="labels">
+						        <label for="code">Preço:</label>
+								<h:inputText type="text" class="form-control dinheiro" value="#{voo_controller.entity.preco}" />
+						    </div> 
+						    <div class="labels">
+						        <label for="code">Trecho:</label>
+								<h:selectOneMenu value="#{voo_controller.selectItem}" styleClass="form-control"  >            
+									<f:selectItem itemLabel="Selecione um trecho..."  noSelectionOption="true"/>
+                        			<f:selectItems value="#{voo_controller.listaDeTrechos2}" />
+								</h:selectOneMenu>
+						    </div>
+						</div>
+					    <br />
+					    <h:commandButton action="#{voo_controller.save}" class="btn btn-primary " value="Salvar" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{voo_controller.listagem}" class="btn btn-primary " value="Listagem" />
+					</h:form>
+		      	</div>						
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

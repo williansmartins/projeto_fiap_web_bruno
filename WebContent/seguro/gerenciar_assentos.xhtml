@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:body>
+    	<ui:composition template="../templates/template.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Linhas Aéreas - Início</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<div class="conteudo assento">
+					<h1 class="centro">Controlar Assentos</h1>
+					<h:form >
+						<div class="centro"> 
+						    <div class="labels">
+						        <label for="code">Vôo: #{sessionScope.idDoVoo} </label>
+						    </div>
+						    <c:forEach var="assento" items="#{sessionScope.listaDeAssentos}">
+							    <div class="labels">
+							        <label for="code" class="floatLeft">Assento #{assento.numero}:</label>
+	    							<h:selectOneMenu value="#{assento.descricao}" styleClass="form-control floatLeft combos"  >            
+										<f:selectItem itemLabel="Executivo" itemValue="executivo"/>
+										<f:selectItem itemLabel="Econômico" itemValue="economico"/>
+									</h:selectOneMenu>
+	
+	    							<h:selectOneMenu value="#{assento.classe}" styleClass="form-control floatLeft combos"  >            
+										<f:selectItem itemLabel="Livre" itemValue="livre"/>
+										<f:selectItem itemLabel="Reservado" itemValue="reservado"/>
+									</h:selectOneMenu>
+							    </div> 
+						    </c:forEach>
+						</div>
+					    <br />
+					    <h:commandButton action="#{assento_controller.save}" class="btn btn-primary " value="Salvar" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{assento_controller.listagem}" class="btn btn-primary " value="Listagem" />
+					</h:form>
+		      	</div>						
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

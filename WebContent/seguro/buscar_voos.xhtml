@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="../templates/template.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Linhas Aéreas - Início</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<div class="conteudo">
+					<h1 class="centro">Buscar Vôos</h1>
+					<h:form >
+						<div class="tabela"> 
+						    <div class="labels">
+						        <label for="code">Destino:</label>
+						        <h:inputText type="text" class="form-control" value="#{voo_controller.trecho.origem}" />
+						    </div>
+						    <div class="labels">
+						        <label for="code">Origem:</label>
+								<h:inputText type="text" class="form-control" value="#{voo_controller.trecho.destino}" />
+						    </div> 
+						    <div class="labels">
+						        <label for="code">Data da ida:</label>
+								<h:inputText type="text" class="form-control data" value="#{voo_controller.dataIda}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="America/Sao_Paulo"/>
+								</h:inputText>
+						    </div> 
+						    <div class="labels">
+						        <label for="code">Data da volta:</label>
+								<h:inputText type="text" class="form-control data" value="#{voo_controller.dataVolta}" >
+									<f:convertDateTime pattern="dd/MM/yyyy" type="date" timeZone="America/Sao_Paulo"/>
+								</h:inputText>
+						    </div> 
+						</div>
+					    <br />
+					    <h:commandButton action="#{voo_controller.buscarVoos}" class="btn btn-primary " value="Buscar" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
+					</h:form>
+		      	</div>						
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

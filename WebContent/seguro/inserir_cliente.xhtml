@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="../templates/template.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Linhas Aéreas - Início</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<div class="conteudo">
+					<h1 class="centro">Inserir Cliente</h1>
+					<h:form >
+						<div class="tabela"> 
+						    <div class="labels">
+						        <label for="code">Nome</label>
+						        <h:inputText type="text" class="form-control" value="#{cliente_controller.entity.nome}" />
+						    </div>
+						    <div class="labels">
+						        <label for="code">Login</label>
+								<h:inputText type="text" class="form-control" value="#{cliente_controller.entity.login}" />
+						    </div>
+						    <div class="labels">
+						        <label for="code">Senha</label>
+								<h:inputText type="text" class="form-control" value="#{cliente_controller.entity.senha}" />
+						    </div>
+						</div>
+					    <br />
+					    <h:commandButton action="#{cliente_controller.save}" class="btn btn-primary " value="Salvar" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{cliente_controller.listagem}" class="btn btn-primary " value="Listar Clientes" />
+					</h:form>
+		      	</div>						
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="../templates/template_simples.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Linhas Aéreas - Início</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<h1 class="centro">Resultado da Busca - Vôos</h1>
+				<div class="conteudo">
+					<h:form id="form" role="form" class="table-responsive">
+						<div id="tabela_wrapper">
+			    			<h:dataTable value="#{voo_controller.lista}" var="obj"
+				    			styleClass="table table-striped tabela"
+				    			headerClass="order-table-header"
+				    			rowClasses="order-table-odd-row,order-table-even-row" >
+				 
+				    			<h:column>
+				    				<f:facet name="header">ID</f:facet>
+				    				#{obj.id}
+				    			</h:column>
+				    			
+				    			<h:column>
+				    				<f:facet name="header">Data</f:facet>
+				    				#{obj.data}
+				    			</h:column>
+				 
+				    			<h:column>
+				    				<f:facet name="header">Preço</f:facet>
+				    				#{obj.preco}
+				    			</h:column>
+				 
+				    			<h:column>
+				    				<f:facet name="header">Ações</f:facet>
+				    				<h:commandButton styleClass="btn btn-success" value="Reservar"  action="#{voo_controller.reservar()}">
+				    					<f:setPropertyActionListener target="#{voo_controller.entity}" value="#{obj}"></f:setPropertyActionListener>
+				    				</h:commandButton>
+				    				
+				    			</h:column>
+				 
+				 
+				    		</h:dataTable>
+						</div>	
+	    				<h:commandButton styleClass="btn btn-primary" value="Inserir" action="#{voo_controller.prepareInsert}" />	
+	    				&nbsp;
+	    				<h:commandButton styleClass="btn btn-primary" value="Início" action="#{geral_controller.home}" />	
+	    				<div id="dialog-confirm" title="Aviso de exclusão" style="display:none">
+						  <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>Deseja realmente remover este item?</p>
+						</div>
+					</h:form>							
+				</div>
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

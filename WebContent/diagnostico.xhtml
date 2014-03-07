@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core">
+    <h:body>
+    	<ui:composition template="templates/template.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<h1 class="centro">Tela de Diagnósticos</h1>
+				<div class="conteudo">
+					<h:form id="form" role="form" class="table-responsive">
+						<div id="tabela_wrapper">
+			    			<h:dataTable value="#{cliente_controller.lista}" var="obj">
+				 
+				    			<h:column>
+				    				<f:facet name="header">Login</f:facet>
+				    				#{obj.login}
+				    			</h:column>
+				 
+				    			<h:column>
+				    				<f:facet name="header">Senha</f:facet>
+				    				#{obj.senha}
+				    			</h:column>
+				 
+				    		</h:dataTable>
+						</div>	
+					</h:form>							
+				</div>
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

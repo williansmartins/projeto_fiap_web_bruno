@@ -1,0 +1,36 @@
+<persistence xmlns="http://java.sun.com/xml/ns/persistence"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
+	version="2.0">
+	<persistence-unit name="mysql-local" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.ejb.HibernatePersistence</provider>
+		<class>br.com.fiap.web.model.Assento</class>
+		<class>br.com.fiap.web.model.Aviao</class>
+		<class>br.com.fiap.web.model.Trecho</class>
+		<class>br.com.fiap.web.model.Reserva</class>
+		<class>br.com.fiap.web.model.Voo</class>
+		<class>br.com.fiap.web.model.Classe</class>
+		<class>br.com.fiap.web.model.ClienteEntity</class>
+		<class>br.com.fiap.web.model.Passageiro</class>
+		<properties>
+		    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />
+			<property name="hibernate.show_sql" value="true" />   <!-- Mostra no console as mensagem que o MySql retorna -->
+		    <property name="hibernate.hbm2ddl.auto" value="update" /> <!-- Cria uma tabela caso a mesma nao exista no banco de dados --> 
+			<property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/fiap"/>
+			<property name="javax.persistence.jdbc.user" value="root"/>
+			<property name="javax.persistence.jdbc.password" value="mancini"/>
+			<property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/> 			
+		</properties>
+	</persistence-unit>
+<!-- 	<persistence-unit name="persistence-unity-derby" transaction-type="RESOURCE_LOCAL"> -->
+<!-- 		<properties> -->
+<!-- 			<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" /> -->
+<!-- 			<property name="javax.persistence.jdbc.url" value="jdbc:derby:simpleDB;create=true" /> -->
+<!-- 			<property name="javax.persistence.jdbc.user" value="TrabalhoPersistenciaJava" /> -->
+<!-- 			<property name="javax.persistence.jdbc.password" value="TrabalhoPersistenciaJava" /> -->
+<!--         	<property name="hibernate.dialect" value="org.hibernate.dialect.DerbyDialect"/>   -->
+<!--             <property name="hbm2ddl.auto" value="create-drop" /> -->
+<!-- 		</properties> -->
+<!-- 	</persistence-unit> -->
+		
+</persistence>
