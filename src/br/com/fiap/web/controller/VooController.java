@@ -16,6 +16,7 @@ import br.com.fiap.web.dao.PassageiroDaoImpl;
 import br.com.fiap.web.dao.ReservaDaoImpl;
 import br.com.fiap.web.dao.TrechoDaoImpl;
 import br.com.fiap.web.dao.VooDaoImpl;
+import br.com.fiap.web.model.Assento;
 import br.com.fiap.web.model.Passageiro;
 import br.com.fiap.web.model.Reserva;
 import br.com.fiap.web.model.Trecho;
@@ -37,12 +38,28 @@ public class VooController {
 	Trecho trecho;
 	Date dataIda;
 	Date dataVolta;
+	List<Assento> listaDeAssentosFake;
 
 	public VooController() {
 		entity = new Voo();
 		trecho = new Trecho();
 		listagem();
 		listaDeTrechos = daoTrecho.findAll();
+		
+		
+		//TRECHO PARA TESTE FAKE poderá ser apagado depois
+		Voo voo = new Voo();
+		voo.setPreco( 100 );
+		voo.setId( 147 );
+		
+		listaDeAssentosFake = new ArrayList<Assento>();
+		listaDeAssentosFake.add( new Assento(1, "1", "executiva", false, voo) );
+		listaDeAssentosFake.add( new Assento(2, "2", "economica", true, voo) );
+		listaDeAssentosFake.add( new Assento(3, "3", "economica", false, voo) );
+		listaDeAssentosFake.add( new Assento(4, "4", "executiva", true, voo) );
+		listaDeAssentosFake.add( new Assento(5, "5", "executiva", true, voo) );
+		
+		
 	}
 
 	public String save() {
@@ -200,6 +217,16 @@ public class VooController {
 
 	public void setDataVolta(Date dataVolta) {
 		this.dataVolta = dataVolta;
+	}
+
+	public List<Assento> getListaDeAssentosFake( )
+	{
+	    return listaDeAssentosFake;
+	}
+
+	public void setListaDeAssentosFake( List<Assento> listaDeAssentosFake )
+	{
+	    this.listaDeAssentosFake = listaDeAssentosFake;
 	}
 
 }

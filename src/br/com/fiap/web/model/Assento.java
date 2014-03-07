@@ -10,77 +10,111 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 @Entity(name = "assento")
-public class Assento implements Serializable {
-	private static final long serialVersionUID = 1L;
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
-	private String descricao;
-	private String numero;
-	private String classe;
-	
-	@ManyToOne
-	@JoinColumn(name="voo", referencedColumnName="id")
-	private Voo voo;
-	
-	public Assento() {
-		super();
-	}
-	
-	public Assento(String numero) {
-		super();
-		this.numero = numero;
-	}
+public class Assento implements Serializable
+{
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int id;
+    private String descricao;
+    private String numero;
+    private String classe;
+    private boolean reservado;
 
+    @ManyToOne
+    @JoinColumn(name = "voo", referencedColumnName = "id")
+    private Voo voo;
 
+    public Assento()
+    {
+	super();
+    }
 
-	public int getId() {
-		return id;
-	}
+    public Assento( String numero )
+    {
+	super();
+	this.numero = numero;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public Assento( int id, String numero, String classe, boolean reservado, Voo voo )
+    {
+	super();
+	this.id = id;
+	this.numero = numero;
+	this.classe = classe;
+	this.reservado = reservado;
+	this.voo = voo;
+    }
 
-	public String getDescricao() {
-		return descricao;
-	}
+    public int getId( )
+    {
+	return id;
+    }
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
+    public void setId( int id )
+    {
+	this.id = id;
+    }
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+    public String getDescricao( )
+    {
+	return descricao;
+    }
 
-	public String getNumero() {
-		return numero;
-	}
+    public void setDescricao( String descricao )
+    {
+	this.descricao = descricao;
+    }
 
-	public void setNumero(String numero) {
-		this.numero = numero;
-	}
+    public static long getSerialversionuid( )
+    {
+	return serialVersionUID;
+    }
 
-	public String getClasse() {
-		return classe;
-	}
+    public String getNumero( )
+    {
+	return numero;
+    }
 
-	public void setClasse(String classe) {
-		this.classe = classe;
-	}
+    public void setNumero( String numero )
+    {
+	this.numero = numero;
+    }
 
-	public Voo getVoo() {
-		return voo;
-	}
+    public String getClasse( )
+    {
+	return classe;
+    }
 
-	public void setVoo(Voo voo) {
-		this.voo = voo;
-	}
+    public void setClasse( String classe )
+    {
+	this.classe = classe;
+    }
 
-	@Override
-	public String toString() {
-		return "Assento [id=" + id + ", descricao=" + descricao + ", numero="
-				+ numero + ", classe=" + classe + "]";
-	}
+    public Voo getVoo( )
+    {
+	return voo;
+    }
+
+    public void setVoo( Voo voo )
+    {
+	this.voo = voo;
+    }
+
+    @Override
+    public String toString( )
+    {
+	return "Assento [id=" + id + ", descricao=" + descricao + ", numero=" + numero
+		+ ", classe=" + classe + "]";
+    }
+
+    public boolean isReservado( )
+    {
+	return reservado;
+    }
+
+    public void setReservado( boolean reservado )
+    {
+	this.reservado = reservado;
+    }
 }
