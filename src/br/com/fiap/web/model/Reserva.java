@@ -11,6 +11,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity(name = "reserva")
 public class Reserva implements Serializable {
@@ -19,7 +20,8 @@ public class Reserva implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	private String loc;
-	
+	@OneToOne(fetch = FetchType.EAGER)
+	private Assento assento;
 	private Trecho trecho;
 	
 	@OneToMany
@@ -30,11 +32,12 @@ public class Reserva implements Serializable {
 	}
 
 	public Reserva(String loc, List<Passageiro> passageiros,
-			Trecho trecho) {
+			Trecho trecho, Assento assento) {
 		super();
 		this.loc = loc;
 		this.passageiros = passageiros;
 		this.trecho = trecho;
+		this.assento = assento;
 	}
 
 	public int getId() {
@@ -68,6 +71,14 @@ public class Reserva implements Serializable {
 
 	public void setTrecho(Trecho trecho) {
 		this.trecho = trecho;
+	}
+
+	public Assento getAssento() {
+		return assento;
+	}
+
+	public void setAssento(Assento assento) {
+		this.assento = assento;
 	}
 
 	public static long getSerialversionuid() {

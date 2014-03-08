@@ -29,6 +29,11 @@
 									<f:convertDateTime pattern="dd/MM/yy"/>
 								</h:inputText>
 						    </div> 
+						    <div class="labels">
+						        <label for="code">Hora:</label>
+						        <h:inputText type="text" class="form-control hora" value="#{voo_controller.entity.hora}">
+						        </h:inputText>
+						    </div>
 						</div>
 					    <br />
 					    <h:commandButton action="#{voo_controller.buscarVoos}" class="btn btn-primary " value="Buscar" />

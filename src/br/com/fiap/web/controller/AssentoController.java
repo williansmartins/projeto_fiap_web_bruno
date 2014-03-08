@@ -62,7 +62,11 @@ public class AssentoController {
 	}
 
 	public String save() {
-		Voo voo = daoDeVoos.findById(idDoVoo);
+		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
+				.getExternalContext().getSession(false);
+		this.idDoVoo = (Integer) session.getAttribute("idDoVoo");
+		this.listaDeAssentos = (List<Assento>) session.getAttribute("listaDeAssentos");
+		Voo voo = daoDeVoos.findById(this.idDoVoo);
 		for (Assento entity : listaDeAssentos) {
 			entity.setVoo(voo);
 			if (entity.getId() == 0) {

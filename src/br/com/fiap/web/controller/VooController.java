@@ -5,10 +5,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
+import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
+import javax.servlet.http.HttpSession;
 
+import br.com.fiap.web.dao.AssentoDaoImpl;
+import br.com.fiap.web.dao.IAssentoDao;
 import br.com.fiap.web.dao.IPassageiroDao;
 import br.com.fiap.web.dao.IReservaDao;
 import br.com.fiap.web.dao.JpaGenericDao;
@@ -24,12 +28,13 @@ import br.com.fiap.web.model.Voo;
 import br.com.fiap.web.utils.Redirecionador;
 
 @ManagedBean(name = "voo_controller")
-@SessionScoped
+@RequestScoped
 public class VooController {
 	private VooDaoImpl dao = new VooDaoImpl();
 	private JpaGenericDao<Trecho> daoTrecho = new TrechoDaoImpl();
 	private IReservaDao daoReserva = new ReservaDaoImpl();
 	private IPassageiroDao daoPassageiro = new PassageiroDaoImpl();
+	private IAssentoDao daoAssento = new AssentoDaoImpl();
 	private Voo entity;
 	List<Voo> lista;
 	List<Trecho> listaDeTrechos;
@@ -62,6 +67,17 @@ public class VooController {
 		
 	}
 
+	private HttpSession getSession() {
+		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	}
+	
+	public String buscarAssentos() {
+		List<Assento> listaAssento = daoAssento.findByIdVoo(entity.getId());
+		HttpSession session = getSession();
+		session.setAttribute("listaAssento", listaAssento);
+		return "reservar_assentos.xhtml";
+	}
+	
 	public String save() {
 		Trecho trecho = new Trecho(selectItem);
 		entity.setTrecho(trecho);
@@ -107,18 +123,9 @@ public class VooController {
 
 	public String buscarVoos() {
 		List<Voo> listaVooIda = null;
-		List<Voo> listaVooVolta = null;
 		lista = new ArrayList<Voo>();
 
-		listaVooIda = dao.findVoo(trecho, dataIda);
-		if (dataVolta != null) {
-			Trecho trechoVolta = new Trecho(trecho.getDestino(),
-					trecho.getOrigem());
-			listaVooVolta = dao.findVoo(trechoVolta, dataVolta);
-			if (listaVooVolta != null) {
-				lista.addAll(listaVooVolta);
-			}
-		}
+		listaVooIda = dao.findVoo(trecho, dataIda, this.entity.getHora());
 		if (listaVooIda != null) {
 			lista.addAll(listaVooIda);
 		}
@@ -127,21 +134,32 @@ public class VooController {
 		return "resultado_busca_voos_simples.xhtml";
 	}
 
-	public void reservar(int id) {
-	    	System.out.println( "Assento" + id);
-//		System.out.println("Reservando o vôo: " + entity.getId());
-//		Passageiro passageiro = new Passageiro();
-//		passageiro.setNome("BRUNO");
-//		passageiro.setIdade(28);
-//		passageiro.setCpf("1234568");
-//		daoPassageiro.insert(passageiro);
-//		
-//		this.trecho = daoTrecho.findById(this.trecho.getId());
-//		Reserva reserva = new Reserva(Math.random() + "_LOC", Collections.singletonList(passageiro),
-//				this.trecho);
-//		
-//		daoReserva.insert(reserva);
-//		new Redirecionador().redirecionar("reserva_sucesso.xhtml");
+	private Assento getAssentoFromSession(int id) {
+		List<Assento> assentos = (List<Assento>) getSession().getAttribute("listaAssento");
+		for (Assento a : assentos) {
+			if (a.getId() == id) {
+				return a;
+			}
+		}
+		return null;
+	}
+	
+	public String reservar(int id) {
+	    	Assento assento = getAssentoFromSession(id);
+	    	assento.setReservado(true);
+	    	daoAssento.update(assento);
+	    //Willian temos que pegar essas informações do login do user, 	
+		Passageiro passageiro = new Passageiro();
+		passageiro.setNome("BRUNO");
+		passageiro.setIdade(28);
+		passageiro.setCpf("1234568");
+		daoPassageiro.insert(passageiro);
+		this.trecho = daoTrecho.findById(this.trecho.getId());
+		Reserva reserva = new Reserva(Math.random() + "_LOC", Collections.singletonList(passageiro),
+				this.trecho, assento);
+		
+		daoReserva.insert(reserva);
+		return "reserva_sucesso.xhtml";
 	}
 
 	// GETTERS AND SETTERS

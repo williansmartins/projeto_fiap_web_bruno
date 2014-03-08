@@ -4,7 +4,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"   
       xmlns:h="http://java.sun.com/jsf/html"
       xmlns:ui="http://java.sun.com/jsf/facelets"
-      xmlns:f="http://java.sun.com/jsf/core">
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:fn="http://java.sun.com/jsp/jstl/functions">
     <h:body>
     	<ui:composition template="../templates/template_simples.xhtml">
  			<ui:define name="titulo">
@@ -30,14 +31,14 @@
 				    				#{obj.data}
 				    			</h:column>
 				 
-				    			<h:column>
-				    				<f:facet name="header">Preço</f:facet>
-				    				#{obj.preco}
+				 				<h:column>
+				    				<f:facet name="header">Hora</f:facet>
+				    				#{fn:replace(obj.hora, '\'', '')}
 				    			</h:column>
-				 
+				    			
 				    			<h:column>
 				    				<f:facet name="header">Ações</f:facet>
-				    				<h:commandButton styleClass="btn btn-success" value="Reservar"  action="#{voo_controller.reservar()}">
+				    				<h:commandButton styleClass="btn btn-success" value="Reservar"  action="#{voo_controller.buscarAssentos()}">
 				    					<f:setPropertyActionListener target="#{voo_controller.entity}" value="#{obj}"></f:setPropertyActionListener>
 				    				</h:commandButton>
 				    				

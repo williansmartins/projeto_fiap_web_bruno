@@ -3,11 +3,13 @@ package br.com.fiap.web.model;
 import java.io.Serializable;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 @Entity(name = "assento")
 public class Assento implements Serializable
@@ -20,6 +22,9 @@ public class Assento implements Serializable
     private String numero;
     private String classe;
     private boolean reservado;
+    
+    @OneToOne(fetch=FetchType.EAGER, mappedBy="assento", optional = true)
+    private Reserva reserva;
 
     @ManyToOne
     @JoinColumn(name = "voo", referencedColumnName = "id")
@@ -29,8 +34,18 @@ public class Assento implements Serializable
     {
 	super();
     }
+    
+    public Reserva getReserva() {
+		return reserva;
+	}
 
-    public Assento( String numero )
+	public void setReserva(Reserva reserva) {
+		this.reserva = reserva;
+	}
+
+
+
+	public Assento( String numero )
     {
 	super();
 	this.numero = numero;

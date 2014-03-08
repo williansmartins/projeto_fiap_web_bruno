@@ -17,9 +17,9 @@
 					<h:form >
 						<div class="centro"> 
 						    <div class="labels">
-						        <label for="code">Vôo: ??? </label>
+						        <label for="code">Vôo: #{sessionScope.idDoVoo} </label>
 						    </div>
-						    <c:forEach var="assento" items="#{voo_controller.listaDeAssentosFake}">
+						    <c:forEach var="assento" items="#{sessionScope.listaAssento}">
 							    <div class="labels">
 							        <label for="code" class="floatLeft">Assento #{assento.numero}:
 									    <h:commandButton action="#{voo_controller.reservar(assento.id)}" class="btn btn-success btn-reservar #{assento.reservado == true ? 'disabled' : 'abled'}" value="#{assento.classe}" >
