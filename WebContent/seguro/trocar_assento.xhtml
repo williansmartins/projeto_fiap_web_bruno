@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"   
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:c="http://java.sun.com/jsp/jstl/core">
+    <h:body>
+    	<ui:composition template="../templates/template_simples.xhtml">
+ 			<ui:define name="titulo">
+				<title>FIAP - Linhas Aéreas - Início</title> 				
+ 			</ui:define>
+ 			<ui:define name="palco">
+				<div class="conteudo assento">
+					<h1 class="centro">Troca de Assento</h1>
+					<h:form >
+						<div class="centro"> 
+						    <div class="labels">
+						        <label for="code">Vôo: ??? </label>
+						    </div>
+						    <div class="labels">
+						        <label for="code">Assento:</label>
+								<h:selectOneMenu value="#{assento_controller.id}" styleClass="form-control"  >            
+									<f:selectItem itemLabel="Selecione um novo assento..."  noSelectionOption="true"/>
+                        			<f:selectItems value="#{assento_controller.listaDeAssentosFake}" />
+								</h:selectOneMenu>
+						    </div>
+						</div>
+					    <br />
+					    <br />
+					    <br />
+					    <br />
+					    <h:commandButton action="#{assento_controller.salvarAssento}" class="btn btn-primary " value="Salvar" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="lista_reservas.xhtml" class="btn btn-primary " value="Voltar" />
+					    <i class="icon-search icon-white"></i>
+					    <h:commandButton action="#{geral_controller.home}" class="btn btn-primary " value="Início" />
+					</h:form>
+		      	</div>						
+ 			</ui:define>
+ 			<ui:define name="rodape">
+ 			</ui:define>
+    	</ui:composition>
+    </h:body>
+</html>

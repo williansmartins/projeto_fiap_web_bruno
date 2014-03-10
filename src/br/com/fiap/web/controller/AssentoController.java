@@ -7,6 +7,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpSession;
 
 import br.com.fiap.web.dao.AssentoDaoImpl;
@@ -26,10 +27,44 @@ public class AssentoController {
 	private List<Voo> listaDeVoos;
 	private List<Assento> listaDeAssentos = new ArrayList<Assento>();
 	private Integer idDoVoo = new Integer(0);
+	private List<SelectItem> listaDeAssentosFake;
+	private Assento entity = new Assento();
+	private Integer id = new Integer(0);
+
+	
+	
+	public AssentoController() {
+		super();
+		listaDeAssentosFake = new ArrayList<SelectItem>();
+		
+		//TRECHO PARA TESTE FAKE poderá ser apagado depois
+		Voo voo = new Voo();
+		voo.setPreco( 100 );
+		voo.setId( 147 );
+		
+		if (listaDeAssentosFake == null) {
+			listaDeAssentosFake = new ArrayList<SelectItem>();
+		}
+		List<Assento> lista = new ArrayList<Assento>();
+		lista.add( new Assento(1, "1", "executiva", false, voo) );
+		lista.add( new Assento(2, "2", "economica", true, voo) );
+		lista.add( new Assento(3, "3", "economica", false, voo) );
+		lista.add( new Assento(4, "4", "executiva", true, voo) );
+		lista.add( new Assento(5, "5", "executiva", true, voo) );
+		listaDeAssentosFake.clear();
+
+		for (Assento item : lista) {
+			listaDeAssentosFake.add(new SelectItem(item.getId(), item.toString()) );
+		}
+				
+		System.out.println(">>>" + listaDeAssentosFake.size());
+		id = new Integer(0);
+	}
 
 	@PostConstruct
 	public void init() {
 		listagem();
+		entity = new Assento();
 	}
 
 	public Integer getIdDoVoo() {
@@ -45,6 +80,11 @@ public class AssentoController {
 		return "lista_voos.xhtml";
 	}
 
+	public void salvarAssento(){
+		System.out.println("salvando assento:" + id);
+		new Redirecionador().redirecionar("lista_reservas.xhtml");
+	}
+	
 	public String gerenciar() {
 		if (idDoVoo > 0) {
 			listaDeAssentos = daoDeAssentos.findByIdVoo(idDoVoo);
@@ -93,5 +133,29 @@ public class AssentoController {
 
 	public void setListaDeVoos(List<Voo> lista) {
 		this.listaDeVoos = lista;
+	}
+
+	public List<SelectItem> getListaDeAssentosFake() {
+		return listaDeAssentosFake;
+	}
+
+	public void setListaDeAssentosFake(List<SelectItem> listaDeAssentosFake) {
+		this.listaDeAssentosFake = listaDeAssentosFake;
+	}
+
+	public Assento getEntity() {
+		return entity;
+	}
+
+	public void setEntity(Assento entity) {
+		this.entity = entity;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
 	}
 }

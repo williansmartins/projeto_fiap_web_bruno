@@ -12,6 +12,43 @@ import br.com.fiap.web.model.ClienteEntity;
 
 public class ClienteTest {
 	JpaGenericDao<ClienteEntity> dao = new ClienteDaoImpl();
+
+	@Test
+	public void inserirClientes() {
+		ClienteEntity obj = new ClienteEntity();
+
+		for (int i = 0; i < 10; i++) {
+			obj = new ClienteEntity("Nome " + i, "login" + i, "senha" + i);
+			dao.insert(obj);
+		}
+
+		List<ClienteEntity> lista = dao.findAll();
+		Assert.assertTrue(lista.size() > 9);
+
+	}
+
+	@Test
+	public void inserirClientesAdmin() {
+		ClienteEntity obj = new ClienteEntity( "Senhor Administrador", "admin", "admin");
+		dao.insert(obj);
+
+		ClienteEntity obj2 = new ClienteEntity();
+		obj2 = dao.findById(obj.getId());
+		Assert.assertTrue( obj.getId() == obj2.getId() );
+
+	}
+
+	@Test
+	public void ExcluirTodos() {
+
+		for (ClienteEntity obj : dao.findAll()) {
+			dao.delete(obj.getId());
+		}
+
+		List<ClienteEntity> lista = dao.findAll();
+		Assert.assertTrue(lista.size() == 0);
+
+	}
 	
 	@Test
 	public void inserirObjeto() {

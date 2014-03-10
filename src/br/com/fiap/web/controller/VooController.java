@@ -5,7 +5,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
-import javax.enterprise.context.RequestScoped;
 import javax.faces.bean.ManagedBean;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
@@ -28,7 +27,7 @@ import br.com.fiap.web.model.Voo;
 import br.com.fiap.web.utils.Redirecionador;
 
 @ManagedBean(name = "voo_controller")
-@RequestScoped
+@javax.faces.bean.RequestScoped
 public class VooController {
 	private VooDaoImpl dao = new VooDaoImpl();
 	private JpaGenericDao<Trecho> daoTrecho = new TrechoDaoImpl();
