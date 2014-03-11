@@ -25,9 +25,9 @@ public class ReservaController
 
     public ReservaController()
     {
-		lista = new ArrayList<Reserva>();
-		Integer id = ((Cliente) getSession().getAttribute("cliente")).getId();
-		lista = dao.findReservaByClienteId(id);
+	lista = new ArrayList<Reserva>();
+	Integer id = ( (Cliente) getSession().getAttribute( "cliente" ) ).getId();
+	lista = dao.findReservaByClienteId(id);
     }
     
     private HttpSession getSession() {

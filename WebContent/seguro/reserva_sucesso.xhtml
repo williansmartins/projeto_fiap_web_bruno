@@ -6,7 +6,7 @@
       xmlns:ui="http://java.sun.com/jsf/facelets"
       >
     <h:body>
-    	<ui:composition template="../templates/template.xhtml">
+    	<ui:composition template="../templates/template_simples.xhtml">
  			<ui:define name="titulo">
 				<title>FIAP - Linhas Aéreas - Início</title> 				
  			</ui:define>
@@ -14,7 +14,7 @@
 				<div class="conteudo">
 					<h1 class="centro">Reserva efetuada com sucesso</h1>
 					<h2 class="centro">Obrigado por utilizar nossos sistemas!</h2>
-					<a class="btn btn-success entrar-novamente" href="#{request.getContextPath()}">
+					<a class="btn btn-success entrar-novamente" href="#{request.getContextPath()}/index_simples.xhtml">
 						Voltar ao início  
 					</a>
 		      	</div>

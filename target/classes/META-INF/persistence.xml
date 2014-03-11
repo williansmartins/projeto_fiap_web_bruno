@@ -11,6 +11,7 @@
 		<class>br.com.fiap.web.model.Voo</class>
 		<class>br.com.fiap.web.model.Classe</class>
 		<class>br.com.fiap.web.model.ClienteEntity</class>
+		<class>br.com.fiap.web.model.Cliente</class>
 		<class>br.com.fiap.web.model.Passageiro</class>
 		<properties>
 		    <property name="hibernate.dialect" value="org.hibernate.dialect.MySQLDialect" />

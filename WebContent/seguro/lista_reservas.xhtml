@@ -32,14 +32,14 @@
 
 							<h:column styleClass="xxx">
 								<f:facet name="header"  styleClass="yyy">Ações</f:facet>
-								<h:commandButton styleClass="btn btn-success"
+								<h:commandButton styleClass="btn btn-success #{obj.confirmada==true ? 'hide' : ''}"
 									value="Trocar Assentos"
 									action="#{reserva_controller.alterarAssento()}">
 									<f:setPropertyActionListener
 										target="#{reserva_controller.id}" value="#{obj.id}"></f:setPropertyActionListener>
 								</h:commandButton>
 								&nbsp;<br />
-								<h:commandButton styleClass="btn btn-primary"
+								<h:commandButton styleClass="btn btn-primary #{obj.confirmada==true ? 'hide' : ''}"
 									value="Confirmar Reserva"
 									action="#{reserva_controller.confirmar()}">
 									<f:setPropertyActionListener
