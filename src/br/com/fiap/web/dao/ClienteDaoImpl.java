@@ -6,29 +6,29 @@ import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.Query;
 
-import br.com.fiap.web.model.ClienteEntity;
+import br.com.fiap.web.model.Cliente;
 
-public class ClienteDaoImpl extends JpaGenericDao<ClienteEntity> implements IClienteDao{
+public class ClienteDaoImpl extends JpaGenericDao<Cliente> implements IClienteDao{
 	
 	private EntityManager entityManager;
-	List<ClienteEntity> lista;
+	List<Cliente> lista;
 	
 	public ClienteDaoImpl() {
 		entityManager = getEntityManager();
 	}
 	
 	@SuppressWarnings("unchecked")
-	public List<ClienteEntity> findEspecific(ClienteEntity cliente) {
+	public List<Cliente> findEspecific(Cliente cliente) {
 		entityManager = getEntityManager();
 		entityManager.getTransaction().begin();
 		
-		String jpql = "SELECT c FROM fiap_web_cliente c WHERE c.login = :login AND c.senha = :senha";
+		String jpql = "SELECT c FROM cliente c WHERE c.login = :login AND c.senha = :senha";
 		
 		Query query = entityManager.createQuery(jpql);
 		query.setParameter("login", cliente.getLogin());
 		query.setParameter("senha", cliente.getSenha());
 		
-		lista = (List<ClienteEntity>)query.getResultList();
+		lista = (List<Cliente>)query.getResultList();
 		
 		entityManager.flush();
 		
@@ -36,7 +36,7 @@ public class ClienteDaoImpl extends JpaGenericDao<ClienteEntity> implements ICli
 		if(lista.size() > 0){
 			return lista;
 		}else{
-			return new ArrayList<ClienteEntity>();
+			return new ArrayList<Cliente>();
 		}
 	}
 }

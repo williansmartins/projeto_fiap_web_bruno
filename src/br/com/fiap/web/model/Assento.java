@@ -22,11 +22,10 @@ public class Assento implements Serializable
     private String numero;
     private String classe;
     private boolean reservado;
-    
-    @OneToOne(fetch=FetchType.EAGER, mappedBy="assento", optional = true)
+    @OneToOne(fetch = FetchType.EAGER)
     private Reserva reserva;
 
-    @ManyToOne
+    @ManyToOne(fetch=FetchType.EAGER)
     @JoinColumn(name = "voo", referencedColumnName = "id")
     private Voo voo;
 
@@ -119,7 +118,7 @@ public class Assento implements Serializable
     @Override
     public String toString( )
     {
-	return "Assento [id=" + id + ", descricao=" + descricao + ", numero=" + numero
+	return "Assento [id=" + id + ", numero=" + numero
 		+ ", classe=" + classe + "]";
     }
 

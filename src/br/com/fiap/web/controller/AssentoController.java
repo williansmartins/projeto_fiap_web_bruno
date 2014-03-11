@@ -12,9 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import br.com.fiap.web.dao.AssentoDaoImpl;
 import br.com.fiap.web.dao.IAssentoDao;
+import br.com.fiap.web.dao.IReservaDao;
 import br.com.fiap.web.dao.IVooDao;
+import br.com.fiap.web.dao.ReservaDaoImpl;
 import br.com.fiap.web.dao.VooDaoImpl;
 import br.com.fiap.web.model.Assento;
+import br.com.fiap.web.model.Reserva;
 import br.com.fiap.web.model.Voo;
 import br.com.fiap.web.utils.Redirecionador;
 
@@ -23,6 +26,7 @@ import br.com.fiap.web.utils.Redirecionador;
 public class AssentoController {
 	private IVooDao daoDeVoos = new VooDaoImpl();
 	private IAssentoDao daoDeAssentos = new AssentoDaoImpl();
+	private IReservaDao daoReserva = new ReservaDaoImpl();
 
 	private List<Voo> listaDeVoos;
 	private List<Assento> listaDeAssentos = new ArrayList<Assento>();
@@ -37,28 +41,24 @@ public class AssentoController {
 		super();
 		listaDeAssentosFake = new ArrayList<SelectItem>();
 		
-		//TRECHO PARA TESTE FAKE poderá ser apagado depois
-		Voo voo = new Voo();
-		voo.setPreco( 100 );
-		voo.setId( 147 );
-		
 		if (listaDeAssentosFake == null) {
 			listaDeAssentosFake = new ArrayList<SelectItem>();
 		}
-		List<Assento> lista = new ArrayList<Assento>();
-		lista.add( new Assento(1, "1", "executiva", false, voo) );
-		lista.add( new Assento(2, "2", "economica", true, voo) );
-		lista.add( new Assento(3, "3", "economica", false, voo) );
-		lista.add( new Assento(4, "4", "executiva", true, voo) );
-		lista.add( new Assento(5, "5", "executiva", true, voo) );
-		listaDeAssentosFake.clear();
-
+		
+		Integer idDoVoo = ((Integer) getSession().getAttribute("idDoVoo"));
+		Integer idDoAssento = ((Integer) getSession().getAttribute("idDoAssento"));
+		List<Assento> lista = daoDeAssentos.findByIdVoo(idDoVoo);
+		List<Assento> listaAssentosInvalidos = new ArrayList<Assento>();
+		for (Assento a : lista) {
+			if (a.isReservado() || a.getId() == idDoAssento) {
+				listaAssentosInvalidos.add(a);
+			}
+		}
+		lista.removeAll(listaAssentosInvalidos);
+		
 		for (Assento item : lista) {
 			listaDeAssentosFake.add(new SelectItem(item.getId(), item.toString()) );
 		}
-				
-		System.out.println(">>>" + listaDeAssentosFake.size());
-		id = new Integer(0);
 	}
 
 	@PostConstruct
@@ -80,8 +80,30 @@ public class AssentoController {
 		return "lista_voos.xhtml";
 	}
 
+	private void liberarAssento() {
+		Integer id = (Integer) getSession().getAttribute("idDoAssento");
+		Assento assento = daoDeAssentos.findById(id);
+		assento.setReservado(Boolean.FALSE);
+		assento.setReserva(null);
+		daoDeAssentos.update(assento);
+		getSession().removeAttribute("idDoAssento");
+	}
+			
+	
 	public void salvarAssento(){
-		System.out.println("salvando assento:" + id);
+		//FIXME:WILLIANS, ANTES DE TROCAR DE ASSENTOS TEMOS QUE COLOCAR UMA MENSAGEM INFORMANDO QUE PODERÁ OCORRER A MULTA, ISSO EU NÃO CONSEGUI
+		//FIXME:TBM NÃO PODEMOS DEIXAR O CARA CONFIRMA A RESERVA E DEPOIS TROCAR, ENTAO TEMOS QUE DESABILITAR OS BOTÕES APÓS O USUÁRIO CONFIRMAR 
+		liberarAssento();
+		Assento assento = daoDeAssentos.findById(this.id);
+		assento.setReservado(Boolean.TRUE);
+		Reserva reserva = (Reserva) getSession().getAttribute("reserva");
+		Float preco = assento.getVoo().getPreco();
+		//MUlTA DE 40% POR TROCAR DE ASSENTO
+		reserva.setValor(new Float((reserva.getValor()*0.4) + preco));
+		reserva.setAssento(assento);
+		daoReserva.update(reserva);
+		assento.setReserva(reserva);
+		daoDeAssentos.update(assento);
 		new Redirecionador().redirecionar("lista_reservas.xhtml");
 	}
 	
@@ -89,17 +111,20 @@ public class AssentoController {
 		if (idDoVoo > 0) {
 			listaDeAssentos = daoDeAssentos.findByIdVoo(idDoVoo);
 			if (listaDeAssentos == null || listaDeAssentos.size() == 0) {
-				for (int cont = 0; cont <= 5; cont++) {
+				for (int cont = 1; cont <= 5; cont++) {
 					listaDeAssentos.add(new Assento(String.valueOf(cont)));
 				}
 			}
 		}
-		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
-				.getExternalContext().getSession(false);
+		HttpSession session = getSession();
 		session.setAttribute("listaDeAssentos", listaDeAssentos);
 		session.setAttribute("idDoVoo", idDoVoo);
 		return "gerenciar_assentos.xhtml?faces-redirect=true";
 	}
+	
+	 private HttpSession getSession() {
+			return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	 }
 
 	public String save() {
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()

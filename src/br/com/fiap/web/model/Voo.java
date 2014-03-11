@@ -20,7 +20,7 @@ public class Voo implements Serializable {
 	private int id;
 	@Temporal(TemporalType.DATE)
 	private Date data;
-	private double preco;
+	private float preco;
 	private String hora;
 
 	@OneToOne
@@ -31,11 +31,11 @@ public class Voo implements Serializable {
 		super();
 	}
 
-	public double getPreco() {
+	public float getPreco() {
 		return preco;
 	}
 
-	public void setPreco(double preco) {
+	public void setPreco(float preco) {
 		this.preco = preco;
 	}
 

@@ -15,27 +15,29 @@ public class VooDaoImpl extends JpaGenericDao<Voo> implements IVooDao {
 	private EntityManager entityManager;
 
 	public List<Voo> findVoo(Trecho trecho, Date data, String hora) {
-		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		entityManager = getEntityManager();
-		TypedQuery<Voo> query = entityManager
-				.createQuery(
-						"select v from voo v where v.trecho.origem = :origem and v.trecho.destino = :destino and v.data = :data and v.hora = :hora",
-						Voo.class);
-		query.setParameter("origem", trecho.getOrigem());
-		query.setParameter("destino", trecho.getDestino());
-		query.setParameter("hora", "'" + hora + "'");
 		
 		Date dataAux = null;
+		List<Voo> lista = null;
 		try {
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			entityManager = getEntityManager();
+			TypedQuery<Voo> query = entityManager
+					.createQuery(
+							"select v from voo v where v.trecho.origem = :origem and v.trecho.destino = :destino and v.data = :data and v.hora = :hora",
+							Voo.class);
+			query.setParameter("origem", trecho.getOrigem());
+			query.setParameter("destino", trecho.getDestino());
+			query.setParameter("hora", "'" + hora + "'");
+			
 			dataAux = sdf.parse(sdf.format(data));
+			query.setParameter("data", dataAux);
+			lista = query.getResultList();
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+		} finally {
+			entityManager.close();
 		}
-		query.setParameter("data", dataAux);
 		
-		List<Voo> lista = query.getResultList();
-		entityManager.close();
 		return lista;
 	}
 }

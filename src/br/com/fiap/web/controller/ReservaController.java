@@ -4,51 +4,59 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.SessionScoped;
+import javax.faces.bean.RequestScoped;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpSession;
 
-import br.com.fiap.web.dao.JpaGenericDao;
 import br.com.fiap.web.dao.ReservaDaoImpl;
+import br.com.fiap.web.model.Cliente;
 import br.com.fiap.web.model.Reserva;
-import br.com.fiap.web.model.Trecho;
 import br.com.fiap.web.utils.Redirecionador;
 
 @ManagedBean(name = "reserva_controller")
-@SessionScoped
+@RequestScoped
 public class ReservaController
 {
 
-    private Reserva entity;
-    List<Reserva> lista;
-    private JpaGenericDao<Reserva> dao = new ReservaDaoImpl();
+//    private Reserva entity;
+    private List<Reserva> lista;
+    private ReservaDaoImpl dao = new ReservaDaoImpl();
     Integer id;
 
     public ReservaController()
     {
 		lista = new ArrayList<Reserva>();
-		//LISTA FAKE
-		lista = dao.findAll();
-		lista.addAll( lista );
-		lista.get(0).setTrecho(new Trecho("São Paulo", "Rio de Janeiro"));
-		entity = new Reserva();
-		id = new Integer(0);
+		Integer id = ((Cliente) getSession().getAttribute("cliente")).getId();
+		lista = dao.findReservaByClienteId(id);
     }
+    
+    private HttpSession getSession() {
+		return (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
+	}
     
     public void confirmar(  )
     {
+    	Reserva reserva =  dao.findById(id);
+    	reserva.setConfirmada(Boolean.TRUE);
+    	dao.update(reserva);
     	System.out.println("confirmando: " + id);
     }
     
     public void alterarAssento(  )
     {
-    	System.out.println("alterando o assento: " + id);
+    	Reserva reserva =  dao.findById(id);
+    	getSession().setAttribute("idDoVoo", reserva.getAssento().getVoo().getId());
+    	getSession().setAttribute("idDoAssento", reserva.getAssento().getId());
+    	getSession().setAttribute("reserva", reserva);
+    	
     	new Redirecionador().redirecionar("trocar_assento.xhtml");
     }
 
     //GETTERS AND SETTERS
-    public Reserva getEntity( )
-    {
-    	return entity;
-    }
+//    public Reserva getEntity( )
+//    {
+//    	return entity;
+//    }
 
     public Integer getId() {
 		return id;
@@ -58,10 +66,10 @@ public class ReservaController
 		this.id = id;
 	}
 
-	public void setEntity( Reserva entity )
-    {
-    	this.entity = entity;
-    }
+//	public void setEntity( Reserva entity )
+//    {
+//    	this.entity = entity;
+//    }
 
     public List<Reserva> getLista( )
     {

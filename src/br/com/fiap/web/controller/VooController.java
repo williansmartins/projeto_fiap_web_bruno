@@ -1,7 +1,6 @@
 package br.com.fiap.web.controller;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -12,15 +11,13 @@ import javax.servlet.http.HttpSession;
 
 import br.com.fiap.web.dao.AssentoDaoImpl;
 import br.com.fiap.web.dao.IAssentoDao;
-import br.com.fiap.web.dao.IPassageiroDao;
 import br.com.fiap.web.dao.IReservaDao;
 import br.com.fiap.web.dao.JpaGenericDao;
-import br.com.fiap.web.dao.PassageiroDaoImpl;
 import br.com.fiap.web.dao.ReservaDaoImpl;
 import br.com.fiap.web.dao.TrechoDaoImpl;
 import br.com.fiap.web.dao.VooDaoImpl;
 import br.com.fiap.web.model.Assento;
-import br.com.fiap.web.model.Passageiro;
+import br.com.fiap.web.model.Cliente;
 import br.com.fiap.web.model.Reserva;
 import br.com.fiap.web.model.Trecho;
 import br.com.fiap.web.model.Voo;
@@ -32,7 +29,6 @@ public class VooController {
 	private VooDaoImpl dao = new VooDaoImpl();
 	private JpaGenericDao<Trecho> daoTrecho = new TrechoDaoImpl();
 	private IReservaDao daoReserva = new ReservaDaoImpl();
-	private IPassageiroDao daoPassageiro = new PassageiroDaoImpl();
 	private IAssentoDao daoAssento = new AssentoDaoImpl();
 	private Voo entity;
 	List<Voo> lista;
@@ -49,21 +45,6 @@ public class VooController {
 		trecho = new Trecho();
 		listagem();
 		listaDeTrechos = daoTrecho.findAll();
-		
-		
-		//TRECHO PARA TESTE FAKE poderá ser apagado depois
-		Voo voo = new Voo();
-		voo.setPreco( 100 );
-		voo.setId( 147 );
-		
-		listaDeAssentosFake = new ArrayList<Assento>();
-		listaDeAssentosFake.add( new Assento(1, "1", "executiva", false, voo) );
-		listaDeAssentosFake.add( new Assento(2, "2", "economica", true, voo) );
-		listaDeAssentosFake.add( new Assento(3, "3", "economica", false, voo) );
-		listaDeAssentosFake.add( new Assento(4, "4", "executiva", true, voo) );
-		listaDeAssentosFake.add( new Assento(5, "5", "executiva", true, voo) );
-		
-		
 	}
 
 	private HttpSession getSession() {
@@ -146,18 +127,19 @@ public class VooController {
 	public String reservar(int id) {
 	    	Assento assento = getAssentoFromSession(id);
 	    	assento.setReservado(true);
-	    	daoAssento.update(assento);
-	    //Willian temos que pegar essas informações do login do user, 	
-		Passageiro passageiro = new Passageiro();
-		passageiro.setNome("BRUNO");
-		passageiro.setIdade(28);
-		passageiro.setCpf("1234568");
-		daoPassageiro.insert(passageiro);
+	    	
 		this.trecho = daoTrecho.findById(this.trecho.getId());
-		Reserva reserva = new Reserva(Math.random() + "_LOC", Collections.singletonList(passageiro),
+		Reserva reserva = new Reserva(Math.random() + "_LOC", ((Cliente)getSession().getAttribute("cliente")),
 				this.trecho, assento);
 		
+		assento.setReserva(reserva);
+		
+		if (assento.getClasse().equalsIgnoreCase("executivo")) {
+    		reserva.setValor(new Float(assento.getVoo().getPreco() * 1.2));
+    	}	
+		
 		daoReserva.insert(reserva);
+		daoAssento.update(assento);
 		return "reserva_sucesso.xhtml";
 	}
 

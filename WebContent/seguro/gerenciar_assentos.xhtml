@@ -22,14 +22,14 @@
 						    <c:forEach var="assento" items="#{sessionScope.listaDeAssentos}">
 							    <div class="labels">
 							        <label for="code" class="floatLeft">Assento #{assento.numero}:</label>
-	    							<h:selectOneMenu value="#{assento.descricao}" styleClass="form-control floatLeft combos"  >            
+	    							<h:selectOneMenu value="#{assento.classe}" styleClass="form-control floatLeft combos"  >            
 										<f:selectItem itemLabel="Executivo" itemValue="executivo"/>
 										<f:selectItem itemLabel="Econômico" itemValue="economico"/>
 									</h:selectOneMenu>
 	
-	    							<h:selectOneMenu value="#{assento.classe}" styleClass="form-control floatLeft combos"  >            
-										<f:selectItem itemLabel="Livre" itemValue="livre"/>
-										<f:selectItem itemLabel="Reservado" itemValue="reservado"/>
+	    							<h:selectOneMenu value="#{assento.reservado}" styleClass="form-control floatLeft combos"  >            
+										<f:selectItem itemLabel="Livre" itemValue="false"/>
+										<f:selectItem itemLabel="Reservado" itemValue="true"/>
 									</h:selectOneMenu>
 							    </div> 
 						    </c:forEach>
